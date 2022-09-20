@@ -1,6 +1,5 @@
 /* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/no-var-requires */
-import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 import dts from 'rollup-plugin-dts';
@@ -25,28 +24,6 @@ const options =
 {
     input: 'src/index.ts',
     output: [
-        {
-            banner,
-            file: './dist/umd/index.js',
-            format: 'umd',
-            sourcemap: true,
-            name: "MYLIB",
-        },
-        {
-            banner,
-            file: './dist/umd/index.min.js',
-            format: 'umd',
-            sourcemap: true,
-            name: "MYLIB",
-            plugins: [terser()]
-        },
-        {
-            banner,
-            file: pkg.main,
-            format: 'cjs',
-            sourcemap: true,
-            name: 'MYLIB'
-        },
         {
             banner,
             file: './dist/esm/index.js',
@@ -77,7 +54,6 @@ const options =
     plugins: [
         external(),
         resolve(),
-        commonjs(),
         typescript({ tsconfig: './tsconfig.json' })
     ]
 };
@@ -85,7 +61,7 @@ const options =
 export default [
     options,
     {
-        input: 'dist/esm/src/index.d.ts',
+        input: 'dist/esm/index.d.ts',
         output: [{ file: pkg.types, format: "esm" }],
         plugins: [dts()],
     }
